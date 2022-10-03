@@ -1,0 +1,6 @@
+name: WorldSDC
+version: '0.0.1-ALPHA'
+main: com.github.white555gamer.worldsdc.WorldSDC
+api-version: 1.19
+authors: [ WHERE_WHITE_, WHERE_WHITE_KUN, WHITE555Gamer ]
+description: This plugin is for a World Setting view or edit Data Control.
