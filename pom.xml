@@ -6,7 +6,7 @@
 
     <groupId>com.github.white555gamer</groupId>
     <artifactId>WorldSDC</artifactId>
-    <version>0.0.1-ALPHA</version>
+    <version>0.0.1-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>WorldSDC</name>
