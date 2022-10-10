@@ -2,6 +2,8 @@ package com.github.white555gamer.worldsdc.assets.commands;
 
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,86 +34,90 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
         } else if (args.length == 2) {
 
             if (IsParsableWorldsBoolean(getServer().getWorlds(), args[0])) {
+
+                World world = getWorld(args[0]);
+
                 switch (args[1]) {
 
                     case "worldborder":
-                        Location WorldBCLoc = getWorld(args[0]).getWorldBorder().getCenter();
+                        WorldBorder worldborder = world.getWorldBorder();
+                        Location WorldBCLoc = worldborder.getCenter();
                         String WorldBCLocData = "(" + WorldBCLoc.getWorld().getName() + "):" + WorldBCLoc.getX() + "/" + WorldBCLoc.getY() + "/" + WorldBCLoc.getZ();
                         sender.sendMessage("World Border(" + args[0] + "):\n" +
                                 "  World Border Center: " + WorldBCLocData + "\n" +
-                                "  World Border Center Coordinate: " + getWorld(args[0]).getWorldBorder().getMaxCenterCoordinate() + "\n" +
-                                "  World Border Size: " + getWorld(args[0]).getWorldBorder().getSize() + "\n" +
-                                "  World Border Max Size: " + getWorld(args[0]).getWorldBorder().getMaxSize() + "\n" +
-                                "  World Border Damage Amount: " + getWorld(args[0]).getWorldBorder().getDamageAmount() + "\n" +
-                                "  World Border Damage Buffer: " + getWorld(args[0]).getWorldBorder().getDamageBuffer() + "\n" +
-                                "  World Border Warning Time: " + getWorld(args[0]).getWorldBorder().getWarningTime() + "\n" +
-                                "  World Border Warning Distance: " + getWorld(args[0]).getWorldBorder().getWarningDistance());
+                                "  World Border Center Coordinate: " + worldborder.getMaxCenterCoordinate() + "\n" +
+                                "  World Border Size: " + worldborder.getSize() + "\n" +
+                                "  World Border Max Size: " + worldborder.getMaxSize() + "\n" +
+                                "  World Border Damage Amount: " + worldborder.getDamageAmount() + "\n" +
+                                "  World Border Damage Buffer: " + worldborder.getDamageBuffer() + "\n" +
+                                "  World Border Warning Time: " + worldborder.getWarningTime() + "\n" +
+                                "  World Border Warning Distance: " + worldborder.getWarningDistance());
                         break;
 
                     case "worlddata":
                         sender.sendMessage("World Data(" + args[0] + "):\n" +
-                                "  World Name: " + getWorld(args[0]).getName() + "\n" +
-                                "  World Hash Code: " +getWorld(args[0]).getName() + "\n" +
-                                "  World UUID: " + getWorld(args[0]).getUID() + "\n" +
-                                "  World Seed: " + getWorld(args[0]).getSeed() + "\n" +
-                                "  World Difficulty: " + getWorld(args[0]).getDifficulty() + "\n" +
-                                "  World is Hardcore: " + getWorld(args[0]).isHardcore() + "\n" +
-                                "  World Players: " + getWorld(args[0]).getPlayers().size());
+                                "  World Name: " + world.getName() + "\n" +
+                                "  World Hash Code: " +world.getName() + "\n" +
+                                "  World UUID: " + world.getUID() + "\n" +
+                                "  World Seed: " + world.getSeed() + "\n" +
+                                "  World Difficulty: " + world.getDifficulty() + "\n" +
+                                "  World is Hardcore: " + world.isHardcore() + "\n" +
+                                "  World Players: " + world.getPlayers().size());
                         break;
 
                     case "worldlocation":
-                        Location SpawnLoc =getWorld(args[0]).getSpawnLocation();
+                        Location SpawnLoc = world.getSpawnLocation();
                         String SpawnLocData = "(" + SpawnLoc.getWorld().getName() + "):" + SpawnLoc.getX() + "/" + SpawnLoc.getY() + "/" + SpawnLoc.getZ();
                         sender.sendMessage("World Location(" + args[0] + "):\n" +
-                                "  World Max Height: " + getWorld(args[0]).getMaxHeight() + "\n" +
-                                "  World Min Height: " + getWorld(args[0]).getMinHeight() + "\n" +
-                                "  World Logical Height: " + getWorld(args[0]).getLogicalHeight() + "\n" +
-                                "  World Sea Level: " + getWorld(args[0]).getSeaLevel() + "\n" +
+                                "  World Max Height: " + world.getMaxHeight() + "\n" +
+                                "  World Min Height: " + world.getMinHeight() + "\n" +
+                                "  World Logical Height: " + world.getLogicalHeight() + "\n" +
+                                "  World Sea Level: " + world.getSeaLevel() + "\n" +
                                 "  World Spawn Location: " + SpawnLocData + "\n" +
-                                "  World is Bed Work: " + getWorld(args[0]).isBedWorks() + "\n" +
-                                "  World is Respawn Anchor Works: " + getWorld(args[0]).isRespawnAnchorWorks() + "\n" +
-                                "  World Keep Spawn In Memory: " + getWorld(args[0]).getKeepSpawnInMemory());
+                                "  World is Bed Work: " + world.isBedWorks() + "\n" +
+                                "  World is Respawn Anchor Works: " + world.isRespawnAnchorWorks() + "\n" +
+                                "  World Keep Spawn In Memory: " + world.getKeepSpawnInMemory());
                         break;
 
                     case "worldrule":
                         sender.sendMessage("World Rule(" + args[0] + "):\n" +
-                                "  World Allow Animals: " + getWorld(args[0]).getAllowAnimals() + "\n" +
-                                "  World Allow Monsters: " + getWorld(args[0]).getAllowMonsters() + "\n" +
-                                "  World PVP: " + getWorld(args[0]).getPVP()
+                                "  World Allow Animals: " + world.getAllowAnimals() + "\n" +
+                                "  World Allow Monsters: " + world.getAllowMonsters() + "\n" +
+                                "  World PVP: " + world.getPVP()
                         );
                         break;
 
                     case "worldsave":
                         sender.sendMessage("World Save(" + args[0] + "):\n" +
-                                "  World Folder: " + getWorld(args[0]).getWorldFolder().getName() + "\n" +
-                                "  World is Auto Save: " + getWorld(args[0]).isAutoSave());
+                                "  World Folder: " + world.getWorldFolder().getName() + "\n" +
+                                "  World is Auto Save: " + world.isAutoSave());
                         break;
 
                     case "worldtime":
                         sender.sendMessage("World Time(" + args[0] + "):\n" +
-                                "  World Time: " + getWorld(args[0]).getTime() + "\n" +
-                                "  World Full Time: " + getWorld(args[0]).getFullTime() + "\n" +
-                                "  World Game Time: " + getWorld(args[0]).getGameTime());
+                                "  World Time: " + world.getTime() + "\n" +
+                                "  World Full Time: " + world.getFullTime() + "\n" +
+                                "  World Game Time: " + world.getGameTime());
                         break;
 
                     case "worldtrait":
                         sender.sendMessage("World Trait(" + args[0] + "):\n" +
-                                "  World is Natural: " + getWorld(args[0]).isNatural() + "\n" +
-                                "  World is Piglin Safe: " + getWorld(args[0]).isPiglinSafe() + "\n" +
-                                "  World has Ceiling: " + getWorld(args[0]).hasCeiling() + "\n" +
-                                "  World Environment: " + getWorld(args[0]).getEnvironment()
+                                "  World is Natural: " + world.isNatural() + "\n" +
+                                "  World is Piglin Safe: " + world.isPiglinSafe() + "\n" +
+                                "  World has Ceiling: " + world.hasCeiling() + "\n" +
+                                "  World Environment: " + world.getEnvironment()
                         );
                         break;
 
                     case "worldweather":
                         sender.sendMessage("World Weather(" + args[0] + "):\n" +
-                                "  World Weather Duration: " + getWorld(args[0]).getWeatherDuration() + "\n" +
-                                "  World Clear Weather Duration: " + getWorld(args[0]).getClearWeatherDuration() + "\n" +
-                                "  World Thunder Duration: " + getWorld(args[0]).getThunderDuration() + "\n" +
-                                "  World is Clear Weather: " + getWorld(args[0]).isClearWeather() + "\n" +
-                                "  World is Thundering: " + getWorld(args[0]).isThundering() + "\n" +
-                                "  World has Storm: " + getWorld(args[0]).hasStorm() + "\n" +
-                                "  World has Sky Light: " + getWorld(args[0]).hasSkyLight());
+                                "  World Weather Duration: " + world.getWeatherDuration() + "\n" +
+                                "  World Clear Weather Duration: " + world.getClearWeatherDuration() + "\n" +
+                                "  World Thunder Duration: " + world.getThunderDuration() + "\n" +
+                                "  World is Clear Weather: " + world.isClearWeather() + "\n" +
+                                "  World is Thundering: " + world.isThundering() + "\n" +
+                                "  World has Storm: " + world.hasStorm() + "\n" +
+                                "  World has Sky Light: " + world.hasSkyLight());
                         break;
 
                     default:
@@ -127,11 +133,13 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
 
             if (IsParsableWorldsBoolean(getServer().getWorlds(), args[0])) {
 
+                World world = getWorld(args[0]);
+
                 switch (args[1]) {
 
                     case "setautosave":
                         if (IsParsableBooleanBoolean(args[2])) {
-                            getWorld(args[0]).setAutoSave(Boolean.parseBoolean(args[2]));
+                            world.setAutoSave(Boolean.parseBoolean(args[2]));
                             sender.sendMessage("Auto Save has been set to " + args[2]);
                         } else {
                             sender.sendMessage(IncorrectArg);
@@ -141,7 +149,7 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
                     case "setdifficulty":
                         if (IsParsableDifficultyBoolean(args[2])) {
                             if (ParseStr2Difficulty(args[2]) != null) {
-                                getWorld(args[0]).setDifficulty(ParseStr2Difficulty(args[2]));
+                                world.setDifficulty(ParseStr2Difficulty(args[2]));
                                 sender.sendMessage("Difficulty has been set to " + args[2]);
                             } else {
                                 sender.sendMessage(IncorrectArg);
@@ -153,7 +161,7 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
 
                     case "sethardcore":
                         if (IsParsableBooleanBoolean(args[2])){
-                            getWorld(args[0]).setHardcore(Boolean.parseBoolean(args[2]));
+                            world.setHardcore(Boolean.parseBoolean(args[2]));
                             sender.sendMessage("Hardcore mode has been set to " + args[2]);
                         } else {
                             sender.sendMessage(IncorrectArg);
@@ -162,7 +170,7 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
 
                     case "setpvp":
                         if (IsParsableBooleanBoolean(args[2])) {
-                            getWorld(args[0]).setPVP(Boolean.parseBoolean(args[2]));
+                            world.setPVP(Boolean.parseBoolean(args[2]));
                             sender.sendMessage("PvP has been set to " + args[2]);
                         } else {
                             sender.sendMessage(IncorrectArg);
@@ -172,7 +180,7 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
                     case "setkeepspawninmemory":
 
                         if (IsParsableBooleanBoolean(args[2])) {
-                            getWorld(args[0]).setKeepSpawnInMemory(Boolean.parseBoolean(args[2]));
+                            world.setKeepSpawnInMemory(Boolean.parseBoolean(args[2]));
                             sender.sendMessage("Keep Spawn In Memory has been set to " + args[2]);
                         } else {
                             sender.sendMessage(IncorrectArg);
@@ -186,7 +194,7 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
                             sender.sendMessage(IncorrectArg);
                             return true;
                         }
-                        getWorld(args[0]).setTime(Integer.parseInt(args[2]));
+                        world.setTime(Integer.parseInt(args[2]));
                         sender.sendMessage("Time has been set to " + args[2]);
                         break;
 
@@ -197,7 +205,7 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
                             sender.sendMessage(IncorrectArg);
                             return true;
                         }
-                        getWorld(args[0]).setFullTime(Integer.parseInt(args[2]));
+                        world.setFullTime(Integer.parseInt(args[2]));
                         sender.sendMessage("Full Time has been set to " + args[2]);
                         break;
 
@@ -208,7 +216,7 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
                             sender.sendMessage(IncorrectArg);
                             return true;
                         }
-                        getWorld(args[0]).setWeatherDuration(Integer.parseInt(args[2]));
+                        world.setWeatherDuration(Integer.parseInt(args[2]));
                         sender.sendMessage("Weather Duration has been set to " + args[2]);
                         break;
 
@@ -219,7 +227,7 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
                             sender.sendMessage(IncorrectArg);
                             return true;
                         }
-                        getWorld(args[0]).setClearWeatherDuration(Integer.parseInt(args[2]));
+                        world.setClearWeatherDuration(Integer.parseInt(args[2]));
                         sender.sendMessage("Clear Weather Duration has been set to " + args[2]);
                         break;
 
@@ -230,14 +238,14 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
                             sender.sendMessage(IncorrectArg);
                             return true;
                         }
-                        getWorld(args[0]).setThunderDuration(Integer.parseInt(args[2]));
+                        world.setThunderDuration(Integer.parseInt(args[2]));
                         sender.sendMessage("Thunder Duration has been set to " + args[2]);
                         break;
 
                     case "setthundering":
 
                         if (IsParsableBooleanBoolean(args[2])) {
-                            getWorld(args[0]).setThundering(Boolean.parseBoolean(args[2]));
+                            world.setThundering(Boolean.parseBoolean(args[2]));
                             sender.sendMessage("Thundering has been set to " + args[2]);
                         } else {
                             sender.sendMessage(IncorrectArg);
@@ -247,7 +255,7 @@ public class WorldSDCC implements CommandExecutor, TabCompleter {
                     case "setstorm":
 
                         if (IsParsableBooleanBoolean(args[2])) {
-                            getWorld(args[0]).setStorm(Boolean.parseBoolean(args[2]));
+                            world.setStorm(Boolean.parseBoolean(args[2]));
                             sender.sendMessage("Storm has been set to " + args[2]);
                         } else {
                             sender.sendMessage(IncorrectArg);
